@@ -126,3 +126,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / "app/static",
 ]
+MEDIA_ROOT = '/files/'
+
+AUTH_USER_MODEL = "base.BaseUser"
