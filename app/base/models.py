@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from hospital.models import Hospital
 # Create your models here.
 
 class BaseUser(AbstractUser):
@@ -7,14 +8,14 @@ class BaseUser(AbstractUser):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     username = models.CharField(max_length=30,unique=True,blank=True,null=True)
-    picture = models.ImageField(blank=True,null=True, upload_to="profiles/")
+    picture = models.ImageField(blank=True,null=True, upload_to="user-profiles/")
     birthday = models.DateField(blank=True,null=True)
     user_id = models.PositiveIntegerField(unique=True,blank=True,null=True)
     description = models.TextField(blank=True,null=True)
     token = models.CharField(max_length=15,null=True,blank=True,unique=True)
     #Doctor stuff
     doctor_id = models.PositiveIntegerField(blank=True,unique=True,null=True)
-    # hospital = models.ForeignKey(hospital,on_delete=CASCADE)
+    hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE,blank=True,null=True)
     more_info = models.TextField(blank=True,null=True)
 
     class status(models.TextChoices):
