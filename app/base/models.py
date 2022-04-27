@@ -28,4 +28,5 @@ class BaseUser(AbstractUser):
     add_hospital = models.BooleanField(default=False)
     add_doctor = models.BooleanField(default=False)
     add_admin = models.BooleanField(default=False)
-
+    def __str__(self):
+        return self.first_name

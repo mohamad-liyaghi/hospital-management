@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'app.base.apps.BaseConfig',
     'app.hospital.apps.HospitalConfig',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -124,9 +126,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_URL = "app/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "app/static",
 ]
 MEDIA_ROOT = os.path.join(BASE_DIR,'app/files')
 
 AUTH_USER_MODEL = "base.BaseUser"
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
