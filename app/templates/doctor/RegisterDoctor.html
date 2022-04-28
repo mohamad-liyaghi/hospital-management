@@ -1,0 +1,22 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load crispy_forms_tags %}
+    {%block title%}Register Doctor{%endblock%}
+</head>
+<body>
+{%block body%}
+<h1>fill out the form below</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.doctor_id|as_crispy_field}}<br>
+    {{form.hospital_to_request|as_crispy_field}}<br>
+    {{form.more_info|as_crispy_field}}<br>
+    <input type="submit" value="Request" class="btn-green">
+</form>
+{%endblock%}
+</body>
+</html>

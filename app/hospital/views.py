@@ -2,12 +2,13 @@ from django.shortcuts import render,redirect
 from django.views.generic import FormView
 from django.db import transaction
 from django.contrib import messages
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from base.models import BaseUser
+
 from .forms import RegisterHospitalForm
 # Create your views here.
 
-class RegisterHospitalView(FormView):
+class RegisterHospitalView(LoginRequiredMixin,FormView):
     form_class = RegisterHospitalForm
     template_name = "hospital/Register_hospital.html"
     @transaction.atomic

@@ -15,7 +15,8 @@ import os,sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, 'app'))
-
+LOGIN_URL = "base:login"
+LOGOUT_REDIRECT_URL = "base:login"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/

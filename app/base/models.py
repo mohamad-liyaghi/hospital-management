@@ -15,7 +15,7 @@ class BaseUser(AbstractUser):
     token = models.CharField(max_length=15,null=True,blank=True,unique=True)
     #Doctor stuff
     doctor_id = models.PositiveIntegerField(blank=True,unique=True,null=True)
-    current_hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE,blank=True,null=True)
+    hospital_to_request = models.ForeignKey(Hospital,on_delete=models.CASCADE,blank=True,null=True)
     more_info = models.TextField(blank=True,null=True)
 
     class doctor_status(models.TextChoices):
@@ -24,14 +24,14 @@ class BaseUser(AbstractUser):
         accepted = ("ac", "accepted")
         declined = ("de", "declined")
 
-    doc_stat = models.CharField(max_length=2, choices=doctor_status.choices, default=doctor_status.didnt_requested)
+    doc_stat = models.CharField(max_length=2, choices=doctor_status.choices, default=doctor_status.didnt_requested,blank=True,null=True)
 
     class status(models.TextChoices):
         patient = ("pa","patient")
         superuser = ("su","superuser")
         admin = ("ad","admin")
         doctor = ("do","doctor")
-    user_status = models.CharField(max_length=2,choices=status.choices,default=status.patient)
+    user_status = models.CharField(max_length=2,choices=status.choices,default=status.patient,blank=True,null=True)
     # permissions
     add_hospital = models.BooleanField(default=False)
     add_doctor = models.BooleanField(default=False)
