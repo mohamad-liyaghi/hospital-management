@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'app.base.apps.BaseConfig',
     'app.hospital.apps.HospitalConfig',
+    'app.doctor.apps.DoctorConfig',
     'django_cleanup.apps.CleanupConfig',
 ]
 
