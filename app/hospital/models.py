@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 class Hospital(models.Model):
@@ -13,5 +12,6 @@ class Hospital(models.Model):
     hospital_id = models.CharField(max_length=20,unique=True)
     phone_number = models.CharField(max_length=12)
     status = models.CharField(max_length=2,choices=status.choices,default=status.no_answer)
+    owner = models.ForeignKey(to="base.BaseUser",on_delete=models.CASCADE,blank=True,null=True)
     description = models.TextField()
 

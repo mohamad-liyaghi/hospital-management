@@ -15,8 +15,16 @@ class BaseUser(AbstractUser):
     token = models.CharField(max_length=15,null=True,blank=True,unique=True)
     #Doctor stuff
     doctor_id = models.PositiveIntegerField(blank=True,unique=True,null=True)
-    hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE,blank=True,null=True)
+    current_hospital = models.ForeignKey(Hospital,on_delete=models.CASCADE,blank=True,null=True)
     more_info = models.TextField(blank=True,null=True)
+
+    class doctor_status(models.TextChoices):
+        requested = ("re", "requested")
+        didnt_requested = ("dr", "didnt_requested")
+        accepted = ("ac", "accepted")
+        declined = ("de", "declined")
+
+    doc_stat = models.CharField(max_length=2, choices=doctor_status.choices, default=doctor_status.didnt_requested)
 
     class status(models.TextChoices):
         patient = ("pa","patient")
