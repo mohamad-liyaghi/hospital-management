@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'app.base.apps.BaseConfig',
     'app.hospital.apps.HospitalConfig',
     'app.doctor.apps.DoctorConfig',
+    'app.admins.apps.AdminsConfig',
     'django_cleanup.apps.CleanupConfig',
 ]
 

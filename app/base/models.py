@@ -38,6 +38,7 @@ class BaseUser(AbstractUser):
         accepted = ("ac", "accepted")
         declined = ("de", "declined")
     admin_stat = models.CharField(max_length=2, choices=admin_status.choices, default=admin_status.didnt_requested, blank=True, null=True)
+    admin_description = models.TextField(blank=True,null=True)
     # permissions
     add_hospital = models.BooleanField(default=False)
     add_doctor = models.BooleanField(default=False)

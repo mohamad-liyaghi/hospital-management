@@ -31,7 +31,7 @@ class registerPage(LoginMixin,CreateView):
     def form_valid(self, form):
         user = self.form_class(self.request.POST, self.request.FILES)
         user = user.save(commit=False)
-        user.username = uuid.uuid4().hex.upper()[0:30]
+        user.username = user.first_name+user.last_name+uuid.uuid4().hex.upper()[0:4]
         user.token = uuid.uuid4().hex.upper()[0:15]
         user.save()
         messages.success(self.request, "you are now registered")
