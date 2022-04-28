@@ -9,6 +9,16 @@
         <a class="nav-link " href="#">Home</a>
       </li>
       {%if request.user.is_authenticated%}
+      <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Register
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">Register Hospital</a></li>
+          <li><a class="dropdown-item" href="#">Register Doctor</a></li>
+          <li><a class="dropdown-item" href="#">Register Admin</a></li>
+        </ul>
+      </div>
         <li class="nav-item">
           <a class="nav-link" href="{%url 'base:logout' %}">Logout</a>
         </li>

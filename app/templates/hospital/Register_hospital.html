@@ -1,0 +1,26 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load crispy_forms_tags %}
+    {%block title%}Register Hospital{%endblock%}
+</head>
+<body>
+{%block body%}
+<h1>fill out the form below</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.name|as_crispy_field}}<br>
+    {{form.address|as_crispy_field}}<br>
+    <br><h6>Hospitals picture:</h6>
+    {{form.picture}}<br><br>
+    {{form.hospital_id|as_crispy_field}}<br>
+    {{form.description|as_crispy_field}}<br>
+    {{form.phone_number|as_crispy_field}}<br>
+    <input type="submit" value="Save" class="btn-green">
+</form>
+{%endblock%}
+</body>
+</html>
