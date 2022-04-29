@@ -1,14 +1,16 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.views import LoginView
-from django.views.generic import  CreateView
+from django.views.generic import  CreateView,DetailView
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.db import transaction
 
 
 import uuid
 
+from base.models import BaseUser
 from .mixins import LoginMixin
 from .forms import RegisterUserForm
 # Create your views here.
@@ -47,3 +49,11 @@ def logoutView(request):
         return redirect('base:home')
     else:
         return redirect('base:login')
+
+
+
+class ProfileView(LoginRequiredMixin,DetailView):
+    template_name = "base-app/other/profile.html"
+    def get_object(self, *args, **kwargs):
+        object = get_object_or_404(BaseUser,username=self.kwargs['username'])
+        return object

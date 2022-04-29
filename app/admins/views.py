@@ -21,4 +21,4 @@ class RegisterAdminView(LoginRequiredMixin,RegisterAdminMixin,FormView):
         return redirect("base:home")
     def form_invalid(self, form):
         messages.success(self.request, "sth went wrong please try again later")
-        return redirect("base:home")
+        return redirect("base:home")    

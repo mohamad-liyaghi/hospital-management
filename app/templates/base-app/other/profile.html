@@ -1,0 +1,33 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {%block title%}Profile{%endblock%}
+</head>
+<body>
+{%block body%}
+<img src="{{object.picture.url}}" style="width:50px; border-radius: 50%;"><br><br>
+<h6>Full name: {{object.first_name}} {{object.last_name}}</h6><br>
+<h6>Username: {{object.username}}</h6><br>
+<h6>User id: {{object.user_id}}</h6><br>
+<h6>Birthday: {{object.birthday}}</h6><br>
+<h6>Extra info: {{object.description}}</h6><br>
+<h6>Status: {{object.user_status}}</h6><br>
+<h6>Doctor Status: {{object.doc_stat}}</h6>
+{%if object.doc_stat == "re"%}
+<h6>doctor id: {{object.doctor_id}}</h6><br>
+<h6>Hospital: {{object.hospital_to_request}}</h6><br>
+<h6>Doctor more info: {{object.more_info}}</h6><br>
+{%endif%}
+<h6>Doctor Status: {{object.admin_stat}}</h6>
+{%if object.admin_stat == "re"%}
+<h6>Admin description: {{object.admin_description}}</h6><br>
+{%endif%}
+<p>Current perms:</p>
+<h6>Add hospital: {{object.add_hospital}}</h6><br>
+<h6>Add doctor: {{object.add_doctor}}</h6><br>
+<h6>Add admin: {{object.add_admin}}</h6><br>
+{%endblock%}
+</body>
+</html>
