@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
-from django.views.generic import FormView
+from django.views.generic import FormView,ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from base.models import BaseUser
-from .mixins import RegisterAdminMixin
+from .mixins import RegisterAdminMixin,ConfirmAdminPageMixin
 from .forms import RegisterAdminForm
 # Create your views here.
 
@@ -21,4 +21,11 @@ class RegisterAdminView(LoginRequiredMixin,RegisterAdminMixin,FormView):
         return redirect("base:home")
     def form_invalid(self, form):
         messages.success(self.request, "sth went wrong please try again later")
-        return redirect("base:home")    
+        return redirect("base:home")
+
+
+class ConfirmAdminListView(LoginRequiredMixin,ConfirmAdminPageMixin, ListView):
+    template_name = "admins/ConfirmAdmin.html"
+    def get_queryset(self):
+        object = BaseUser.objects.filter(admin_stat="re")
+        return object
