@@ -21,8 +21,16 @@
 <h6>Doctor more info: {{object.more_info}}</h6><br>
 {%endif%}
 <h6>Doctor Status: {{object.admin_stat}}</h6>
-{%if object.admin_stat == "re"%}
+{%if request.user.admin_stat == "ac"%}
+    {%if object.admin_stat == "re"%}
 <h6>Admin description: {{object.admin_description}}</h6><br>
+<a href="{%url 'admins:accept-admin' object.username%}"><input class="btn-green" value="Accept" ></a>
+    {%endif%}
+{%endif%}
+{%if request.user.admin_stat == "ac"%}
+    {%if object.admin_stat == "ac"%}
+    <a href="{%url 'admins:decline-admin' object.username%}"><input class="btn-red" value="Decline" style=""></a>
+    {%endif%}
 {%endif%}
 <p>Current perms:</p>
 <h6>Add hospital: {{object.add_hospital}}</h6><br>

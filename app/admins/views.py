@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect
-from django.views.generic import FormView,ListView
+from django.shortcuts import render,redirect,get_object_or_404
+from django.views.generic import FormView,ListView,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from base.models import BaseUser
@@ -29,3 +29,16 @@ class ConfirmAdminListView(LoginRequiredMixin,ConfirmAdminPageMixin, ListView):
     def get_queryset(self):
         object = BaseUser.objects.filter(admin_stat="re")
         return object
+
+
+class AcceptAdminView(LoginRequiredMixin,ConfirmAdminPageMixin,DetailView):
+    def get(self,request,username, *args, **kwargs):
+        object =BaseUser.objects.filter(username=self.kwargs['username'])
+        object.update(admin_stat="ac",add_hospital=True,add_doctor=True,add_admin=True,user_stat="ad")
+        return redirect("admins:confrim-admin-list")
+
+class DeclineAdminView(LoginRequiredMixin,ConfirmAdminPageMixin,DetailView):
+    def get(self,request,username, *args, **kwargs):
+        object =BaseUser.objects.filter(username=self.kwargs['username'])
+        object.update(admin_stat="de",add_hospital=False,add_doctor=False,add_admin=False,user_stat="pa")
+        return redirect("admins:confrim-admin-list")
