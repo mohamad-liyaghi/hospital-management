@@ -3,7 +3,9 @@ from .views import (homePage,
                     loginPage,
                     logoutView,
                     registerPage,
-                    ProfileView)
+                    ProfileView,
+
+                    )
 
 app_name = "base"
 
@@ -13,5 +15,6 @@ urlpatterns = [
     path("register/",registerPage.as_view(),name="register"),
     path("logout/",logoutView,name="logout"),
     path("profile/<str:username>/",ProfileView.as_view(),name="profile"),
+
 
 ]

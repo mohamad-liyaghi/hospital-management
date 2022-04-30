@@ -1,12 +1,12 @@
 from django.shortcuts import render,redirect
-from django.views.generic import FormView
+from django.views.generic import FormView,ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db import transaction
 
 from base.models import BaseUser
 from .forms import RegisterDoctorForm
-from .mixins import RegisterDoctorMixin
+from .mixins import RegisterDoctorMixin,ConfirmDoctorMixin
 
 # Create your views here.
 class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
@@ -29,3 +29,8 @@ class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
         return redirect("base:home")
 
 
+class ConfirmDoctorListView(LoginRequiredMixin,ConfirmDoctorMixin, ListView):
+    template_name = "doctor/ConfirmDoctor.html"
+    def get_queryset(self):
+        object = BaseUser.objects.filter(doc_stat="re")
+        return object
