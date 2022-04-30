@@ -20,7 +20,6 @@
 <h6>Hospital: {{object.hospital_to_request}}</h6><br>
 <h6>Doctor more info: {{object.more_info}}</h6><br>
 {%endif%}
-<h6>Doctor Status: {{object.doc_stat}}</h6>
 {%if request.user.admin_stat == "ac"%}
     {%if object.admin_stat == "re"%}
 <h6>Admin description: {{object.admin_description}}</h6><br>
@@ -34,12 +33,12 @@
 {%endif%}
 {%if request.user.admin_stat == "ac"%}
     {%if object.doc_stat == "re"%}
-    <a href="{%url 'admins:decline-admin' object.username%}"><input class="btn-green" value="Decline" style=""></a>
+    <a href="{%url 'doctor:accept-doctor' object.username%}"><input class="btn-green" value="Accept" style=""></a>
     {%endif%}
 {%endif%}
 {%if request.user.admin_stat == "ac"%}
     {%if object.doc_stat == "ac"%}
-    <a href="{%url 'admins:decline-admin' object.username%}"><input class="btn-red" value="Decline" style=""></a>
+    <a href="{%url 'doctor:decline-doctor' object.username%}"><input class="btn-red" value="Decline" style=""></a>
     {%endif%}
 {%endif%}
 <p>Current perms:</p>

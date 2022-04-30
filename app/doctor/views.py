@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.views.generic import FormView,ListView
+from django.views.generic import FormView,ListView,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db import transaction
@@ -34,3 +34,15 @@ class ConfirmDoctorListView(LoginRequiredMixin,ConfirmDoctorMixin, ListView):
     def get_queryset(self):
         object = BaseUser.objects.filter(doc_stat="re")
         return object
+
+class AcceptDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
+    def get(self,request,username, *args, **kwargs):
+        object =BaseUser.objects.filter(username=self.kwargs['username'])
+        object.update(doc_stat="ac",user_status="do")
+        return redirect("doctor:confirm-doctor-page")
+
+class DeclineDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
+    def get(self,request,username, *args, **kwargs):
+        object =BaseUser.objects.filter(username=self.kwargs['username'])
+        object.update(doc_stat="de",user_status="pa")
+        return redirect("doctor:confirm-doctor-page")
