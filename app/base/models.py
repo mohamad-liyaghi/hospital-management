@@ -15,7 +15,7 @@ class BaseUser(AbstractUser):
     token = models.CharField(max_length=15,null=True,blank=True,unique=True)
     #Doctor stuff
     doctor_id = models.PositiveIntegerField(blank=True,unique=True,null=True)
-    hospital_to_request = models.ForeignKey(Hospital,on_delete=models.CASCADE,blank=True,null=True)
+    hospital_to_request = models.OneToOneField(Hospital,on_delete=models.CASCADE,blank=True,null=True)
     more_info = models.TextField(blank=True,null=True)
 
     class doctor_status(models.TextChoices):
