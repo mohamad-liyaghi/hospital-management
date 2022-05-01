@@ -23,7 +23,7 @@
       <td>{{hospital.name}}</td>
       <td>{{hospital.address}}</td>
       <td><img src="{{hospital.picture.url}}" style="width:30px;"></td>
-      <td><a href="#"> <input type="submit" value="Profile" class="btn-green"></a> </td>
+      <td><a href="{%url 'hospital:profile' hospital.hospital_id%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
     </tr>
   </tbody>
     {%endfor%}

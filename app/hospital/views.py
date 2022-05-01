@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect
-from django.views.generic import FormView,ListView
+from django.shortcuts import render,redirect,get_object_or_404
+from django.views.generic import FormView,ListView,DetailView
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -34,4 +34,11 @@ class ConfirmHospitalListView(LoginRequiredMixin,ConfirmHospitalMixin, ListView)
     template_name = "hospital/ConfirmHospital.html"
     def get_queryset(self):
         object = Hospital.objects.filter(status="n")
+        return object
+
+
+class HospitalProfileView(LoginRequiredMixin,DetailView):
+    template_name = "hospital/HospitalProfile.html"
+    def get_object(self, *args, **kwargs):
+        object = get_object_or_404(Hospital,hospital_id=self.kwargs['id'])
         return object

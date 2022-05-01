@@ -55,5 +55,5 @@ def logoutView(request):
 class ProfileView(LoginRequiredMixin,DetailView):
     template_name = "base-app/other/profile.html"
     def get_object(self, *args, **kwargs):
-        object = get_object_or_404(BaseUser,username=self.kwargs['username'])
+        object = get_object_or_404(BaseUser,hospital_id=self.kwargs['id'])
         return object

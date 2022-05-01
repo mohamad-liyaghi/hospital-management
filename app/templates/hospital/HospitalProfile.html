@@ -1,0 +1,32 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {%block title%}Hospital Profile{%endblock%}
+</head>
+<body>
+{%block body%}
+<img src="{{object.picture.url}}" style="width:50px; border-radius: 50%;"><br><br>
+<h6>Name: {{object.name}}</h6><br>
+<h6>Address: {{object.address}}</h6><br>
+<h6>Id: {{object.hospital_id}}</h6><br>
+<h6>Phone number: {{object.phone_number}}</h6><br>
+<h6>Status: {{object.status}}</h6><br>
+<h6>owner: {{object.owner}}</h6>
+<h6>about: {{object.description}}</h6>
+{%if object.status == "a"%}
+<h6>doctor id: {{object.doctor_id}}</h6><br>
+<h6>Hospital: {{object.hospital_to_request}}</h6><br>
+{%endif%}
+{%if request.user.admin_stat == "ac"%}
+    {%if object.status == "n"%}
+        <h6>hospital description: {{object.more_info}}</h6><br>
+        <a href="#"><input class="btn-green" value="Accept" ></a>
+    {%elif object.admin_stat == "a"%}
+        <a href="#"><input class="btn-red" value="Decline" style=""></a>
+    {%endif%}
+{%endif%}
+{%endblock%}
+</body>
+</html>
