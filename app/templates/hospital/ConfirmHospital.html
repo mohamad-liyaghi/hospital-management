@@ -1,0 +1,33 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load crispy_forms_tags %}
+    {%block title%}Confirm Hospital{%endblock%}
+</head>
+<body>
+{%block body%}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">address</th>
+      <th scope="col">Profile</th>
+      <th scope="col">Page</th>
+    </tr>
+  </thead>
+  {%for hospital in object_list%}
+  <tbody>
+    <tr>
+      <td>{{hospital.name}}</td>
+      <td>{{hospital.address}}</td>
+      <td><img src="{{hospital.picture.url}}" style="width:30px;"></td>
+      <td><a href="#"> <input type="submit" value="Profile" class="btn-green"></a> </td>
+    </tr>
+  </tbody>
+    {%endfor%}
+</table>
+{%endblock%}
+</body>
+</html>

@@ -14,9 +14,15 @@
           Register
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">Register Hospital</a></li>
-          <li><a class="dropdown-item" href="#">Register Doctor</a></li>
-          <li><a class="dropdown-item" href="#">Register Admin</a></li>
+          {%if request.user.doc_stat != "ac"%}
+              <li><a class="dropdown-item" href="#">Register Hospital</a></li>
+          {%endif%}
+          {%if request.user.doc_stat != "ac"%}
+              <li><a class="dropdown-item" href="{%url 'doctor:register-doctor'%}">Register Doctor</a></li>
+          {%endif%}
+          {%if request.user.admin_stat != "ac"%}
+              <li><a class="dropdown-item" href="{%url 'admins:register-admin'%}">Register Admin</a></li>
+          {%endif%}
         </ul>
       </div>
         <li class="nav-item">

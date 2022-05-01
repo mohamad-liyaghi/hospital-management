@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
-from django.views.generic import FormView
+from django.views.generic import FormView,ListView
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from base.models import BaseUser
 
+from .models import Hospital
 from .forms import RegisterHospitalForm
+from .mixins import ConfirmHospitalMixin
 # Create your views here.
 
 class RegisterHospitalView(LoginRequiredMixin,FormView):
@@ -28,3 +30,8 @@ class RegisterHospitalView(LoginRequiredMixin,FormView):
 
 
 
+class ConfirmHospitalListView(LoginRequiredMixin,ConfirmHospitalMixin, ListView):
+    template_name = "hospital/ConfirmHospital.html"
+    def get_queryset(self):
+        object = Hospital.objects.filter(status="n")
+        return object
