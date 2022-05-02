@@ -7,7 +7,7 @@ from django.db import transaction
 import uuid
 
 from base.models import BaseUser
-from hospital.models import Hospital
+from hospital.models import Hospital,Message
 from .forms import RegisterDoctorForm,MessageForm
 from .mixins import RegisterDoctorMixin,ConfirmDoctorMixin,MessageMixin
 
@@ -73,3 +73,10 @@ class SendMessage(LoginRequiredMixin,MessageMixin,FormView):
         messages.success(self.request, "sth went wrong...")
 
 
+class MessageList(LoginRequiredMixin,MessageMixin,ListView):
+    template_name = "doctor/MessageList.html"
+    def get_queryset(self):
+        object = Message.objects.filter(to_hospital=self.request.user.hospital_to_request
+                                        ,status="s",
+                                        doctor= not self.request.user)
+        return object

@@ -1,0 +1,33 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load crispy_forms_tags %}
+    {%block title%}Messages{%endblock%}
+</head>
+<body>
+{%block body%}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">patient</th>
+      <th scope="col">status</th>
+      <th scope="col">From</th>
+    </tr>
+  </thead>
+  {%for message in object_list%}
+  <tbody>
+    <tr>
+      <td><a href="#">{{message.title}}</a> </td>
+      <td>{{message.patient}}</td>
+      <td>{{message.status}}</td>
+      <td>{{message.doctor}}</td>
+    </tr>
+  </tbody>
+    {%endfor%}
+</table>
+{%endblock%}
+</body>
+</html>
