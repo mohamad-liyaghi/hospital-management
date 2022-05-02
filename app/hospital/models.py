@@ -23,10 +23,12 @@ class Message(models.Model):
     patient = models.ForeignKey(to="base.BaseUser", on_delete=models.CASCADE, blank=True, null=True)
     to_hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField()
-    token = models.CharField(max_length=10)
+    token = models.CharField(max_length=10,blank=True,null=True)
 
     class status(models.TextChoices):
         sent = ("s", "sent")
         received = ("r", "received")
         closed = ("c", "closed")
     status = models.CharField(max_length=2,choices=status.choices,default=status.sent,blank=True,null=True)
+    def __str__(self):
+        return self.title

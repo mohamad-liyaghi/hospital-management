@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from .models import Hospital
 
@@ -13,3 +14,5 @@ class RegisterHospitalForm(ModelForm):
             "phone_number":"hospital's phone number",
             "description" : "Tell us about hospital, hospitals owner and ...."
         }
+
+

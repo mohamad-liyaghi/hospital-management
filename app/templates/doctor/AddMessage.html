@@ -1,0 +1,28 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load crispy_forms_tags %}
+    {%block title%}Add message{%endblock%}
+</head>
+<body>
+{%block body%}
+<h1>fill out the form below</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{form.title|as_crispy_field}}<br>
+    {{form.description|as_crispy_field}}<br>
+        <div class="mb-3">
+            <label for="hospital_id" class="form-label">hospital id</label>
+            <input type="text" class="form-control" name="hospital_id" required>
+            <label for="patient_id" class="form-label">patient id</label>
+            <input type="text" class="form-control" name="patient_id" required>
+        </div>
+
+    <input type="submit" value="Request" class="btn-green">
+</form>
+{%endblock%}
+</body>
+</html>

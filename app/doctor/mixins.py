@@ -12,3 +12,11 @@ class ConfirmDoctorMixin():
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("base:home")
+
+
+class MessageMixin():
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.doc_stat == "ac":
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            return redirect("base:home")
