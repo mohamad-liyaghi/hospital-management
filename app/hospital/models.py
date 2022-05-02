@@ -17,3 +17,16 @@ class Hospital(models.Model):
     def __str__(self):
         return self.name
 
+class Message(models.Model):
+    title = models.CharField(max_length=30)
+    doctor = models.ForeignKey(to="base.BaseUser",related_name="doctor",on_delete=models.CASCADE,blank=True,null=True)
+    patient = models.ForeignKey(to="base.BaseUser", on_delete=models.CASCADE, blank=True, null=True)
+    to_hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, blank=True, null=True)
+    description = models.TextField()
+    token = models.CharField(max_length=10)
+
+    class status(models.TextChoices):
+        sent = ("s", "sent")
+        received = ("r", "received")
+        closed = ("c", "closed")
+    status = models.CharField(max_length=2,choices=status.choices,default=status.sent,blank=True,null=True)
