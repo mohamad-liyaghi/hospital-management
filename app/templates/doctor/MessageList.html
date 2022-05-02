@@ -20,7 +20,7 @@
   {%for message in object_list%}
   <tbody>
     <tr>
-      <td><a href="#">{{message.title}}</a> </td>
+      <td><a href="{%url 'doctor:message-detail' message.token %}">{{message.title}}</a> </td>
       <td>{{message.patient}}</td>
       <td>{{message.status}}</td>
       <td>{{message.doctor}}</td>

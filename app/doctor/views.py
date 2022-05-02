@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import FormView,ListView,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -77,6 +77,13 @@ class MessageList(LoginRequiredMixin,MessageMixin,ListView):
     template_name = "doctor/MessageList.html"
     def get_queryset(self):
         object = Message.objects.filter(to_hospital=self.request.user.hospital_to_request
-                                        ,status="s",
-                                        doctor= not self.request.user)
+                                        ,status="s")
         return object
+
+class MessageDetail(LoginRequiredMixin,MessageMixin,DetailView):
+    template_name = "doctor/MessageDetail.html"
+    def get_object(self,*args,**kwargs):
+        return  get_object_or_404(
+            Message,
+            token = self.kwargs['token']
+        )

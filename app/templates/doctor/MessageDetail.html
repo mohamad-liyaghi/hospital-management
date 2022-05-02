@@ -1,0 +1,19 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {%block title%}Message detail{%endblock%}
+</head>
+<body>
+{%block body%}
+<h5>Title: {{object.title}}</h5><br>
+<h5>Description: {{object.description}}</h5><br>
+<h5>From: {{object.doctor}}</h5><br>
+<h5>To: {{object.to_hospital}}</h5><br>
+<h5>Patient: {{object.patient}}</h5><br>
+<h5>Statu: {{object.status}}</h5><br>
+<input type="submit" value="Change status" class="btn-green">
+{%endblock%}
+</body>
+</html>
