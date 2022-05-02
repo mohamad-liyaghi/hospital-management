@@ -77,7 +77,7 @@ class MessageList(LoginRequiredMixin,MessageMixin,ListView):
     template_name = "doctor/MessageList.html"
     def get_queryset(self):
         object = Message.objects.filter(to_hospital=self.request.user.hospital_to_request
-                                        ,status="s")
+                                        ,status=["s","r"])
         return object
 
 class MessageDetail(LoginRequiredMixin,MessageMixin,DetailView):
@@ -87,3 +87,15 @@ class MessageDetail(LoginRequiredMixin,MessageMixin,DetailView):
             Message,
             token = self.kwargs['token']
         )
+
+class ReadMessageStatus(LoginRequiredMixin,MessageMixin,DetailView):
+    def get(self,*args, **kwargs):
+        object = Message.objects.filter(token=self.kwargs['token'])
+        object.update(status="r")
+        return redirect("doctor:messages")
+
+class CloseMessageStatus(LoginRequiredMixin,MessageMixin,DetailView):
+    def get(self,*args, **kwargs):
+        object = Message.objects.filter(token=self.kwargs['token'])
+        object.update(status="c")
+        return redirect("doctor:messages")

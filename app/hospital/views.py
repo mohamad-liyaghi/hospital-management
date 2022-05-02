@@ -66,3 +66,4 @@ class DeclineHospitalView(LoginRequiredMixin,ConfirmHospitalMixin,DetailView):
             )
         hospital.update(status="d")
         return redirect("hospital:hospital-confirm-list")
+

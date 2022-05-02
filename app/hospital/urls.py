@@ -1,5 +1,9 @@
 from django.urls import path
-from hospital.views import RegisterHospitalView,ConfirmHospitalListView,HospitalProfileView,AcceptHospitalView,DeclineHospitalView
+from hospital.views import (RegisterHospitalView,
+                            ConfirmHospitalListView,
+                            HospitalProfileView,
+                            AcceptHospitalView,
+                            DeclineHospitalView,)
 
 app_name = "hospital"
 

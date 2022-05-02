@@ -5,7 +5,7 @@ from .views import (RegisterDoctorView,
                     DeclineDoctorView,
                     SendMessage,
                     MessageList,
-                    MessageDetail)
+                    MessageDetail,ReadMessageStatus,CloseMessageStatus)
 app_name = "doctor"
 urlpatterns = [
     path("register-doctor/",RegisterDoctorView.as_view(),name="register-doctor"),
@@ -14,5 +14,8 @@ urlpatterns = [
     path("decline-doctor/<str:username>/",DeclineDoctorView.as_view(),name="decline-doctor"),
     path("send-message/",SendMessage.as_view(),name='send-message'),
     path("message-list/",MessageList.as_view(),name="messages"),
-    path("message-detail/<str:token>/",MessageDetail.as_view(),name="message-detail")
+    path("message-detail/<str:token>/",MessageDetail.as_view(),name="message-detail"),
+    path("message-read/<str:token>/",ReadMessageStatus.as_view(),name="read-message"),
+    path("message-close/<str:token>/",CloseMessageStatus.as_view(),name="close-message"),
+
 ]
