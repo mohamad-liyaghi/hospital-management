@@ -25,19 +25,23 @@ $ git clone https://github.com/Ml06py/hospital-management.git
 ```
 $ cd hospital-management
 ```
-
 ### Step 3:
+```
+$ pip install -r requirements.txt
+```
+
+### Step 4:
 ```
 $ python manage.py makemigrations
 ```
 
-### Step 4:
+### Step 5:
 ```
 $ python manage.py migrate
 ```
 
 
-### Step 5:
+### Step 6:
 ```
 $ python manage.py runserver
 ```
