@@ -26,11 +26,7 @@
 <a href="{%url 'admins:accept-admin' object.username%}"><input class="btn-green" value="Accept" ></a>
     {%endif%}
 {%endif%}
-{%if request.user.admin_stat == "ac"%}
-    {%if object.admin_stat == "ac"%}
-    <a href="{%url 'admins:decline-admin' object.username%}"><input class="btn-red" value="Decline" style=""></a>
-    {%endif%}
-{%endif%}
+
 {%if request.user.admin_stat == "ac"%}
     {%if object.doc_stat == "re"%}
     <a href="{%url 'doctor:accept-doctor' object.username%}"><input class="btn-green" value="Accept" style=""></a>
@@ -38,13 +34,18 @@
 {%endif%}
 {%if request.user.admin_stat == "ac"%}
     {%if object.doc_stat == "ac"%}
-    <a href="{%url 'doctor:decline-doctor' object.username%}"><input class="btn-red" value="Decline" style=""></a>
+    <a href="{%url 'doctor:decline-doctor' object.username%}"><input class="btn-red" value="Decline Doctor" style=""></a>
     {%endif%}
 {%endif%}
 <p>Current perms:</p>
 <h6>Add hospital: {{object.add_hospital}}</h6><br>
 <h6>Add doctor: {{object.add_doctor}}</h6><br>
 <h6>Add admin: {{object.add_admin}}</h6><br>
+{%if request.user.admin_stat == "ac"%}
+    {%if object.admin_stat == "ac"%}
+    <a href="{%url 'admins:decline-admin' object.username%}"><input class="btn-red" value="Decline Admin" style=""></a>
+    {%endif%}
+{%endif%}
 {%endblock%}
 </body>
 </html>

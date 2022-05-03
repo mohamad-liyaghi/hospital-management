@@ -4,8 +4,8 @@ from .views import (RegisterDoctorView,
                     AcceptDoctorView,
                     DeclineDoctorView,
                     SendMessage,
-                    MessageList,
-                    MessageDetail,ReadMessageStatus,CloseMessageStatus)
+                    UnreadMessageList,
+                    MessageDetail,AllMessageList,ReadMessageStatus,CloseMessageStatus)
 app_name = "doctor"
 urlpatterns = [
     path("register-doctor/",RegisterDoctorView.as_view(),name="register-doctor"),
@@ -13,7 +13,8 @@ urlpatterns = [
     path("accept-doctor/<str:username>/",AcceptDoctorView.as_view(),name="accept-doctor"),
     path("decline-doctor/<str:username>/",DeclineDoctorView.as_view(),name="decline-doctor"),
     path("send-message/",SendMessage.as_view(),name='send-message'),
-    path("message-list/",MessageList.as_view(),name="messages"),
+    path("unread-messages-list/",UnreadMessageList.as_view(),name="unread-messages"),
+    path("all-message-list/",AllMessageList.as_view(),name="all-messages"),
     path("message-detail/<str:token>/",MessageDetail.as_view(),name="message-detail"),
     path("message-read/<str:token>/",ReadMessageStatus.as_view(),name="read-message"),
     path("message-close/<str:token>/",CloseMessageStatus.as_view(),name="close-message"),

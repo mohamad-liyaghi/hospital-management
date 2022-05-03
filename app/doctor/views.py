@@ -73,11 +73,17 @@ class SendMessage(LoginRequiredMixin,MessageMixin,FormView):
         messages.success(self.request, "sth went wrong...")
 
 
-class MessageList(LoginRequiredMixin,MessageMixin,ListView):
+class UnreadMessageList(LoginRequiredMixin,MessageMixin,ListView):
     template_name = "doctor/MessageList.html"
     def get_queryset(self):
         object = Message.objects.filter(to_hospital=self.request.user.hospital_to_request
                                         ,status=["s","r"])
+        return object
+
+class AllMessageList(LoginRequiredMixin,MessageMixin,ListView):
+    template_name = "doctor/MessageList.html"
+    def get_queryset(self):
+        object = Message.objects.filter(to_hospital=self.request.user.hospital_to_request)
         return object
 
 class MessageDetail(LoginRequiredMixin,MessageMixin,DetailView):

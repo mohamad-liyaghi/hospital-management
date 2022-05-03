@@ -35,19 +35,24 @@
             <h6 class="text-uppercase fw-bold mb-4">
               Pages
             </h6>
+          {%if request.user.admin_stat == "ac" %}
             <p>
-              <a href="#!" class="text-reset">Register hospital</a>
+              <a href="{%url 'hospital:register-hospital'%}" class="text-reset">Register hospital</a>
             </p>
-            {%if request.user.admin_stat == "ac"%}
+          {%endif%}
+
+
+            {%if request.user.doc_stat != "ac" and "re" and request.user.admin_stat != "ac" and "re"%}
               <p>
                 <a href="{%url 'admins:register-admin'%}" class="text-reset">Register Admin</a>
               </p>
-            {%endif%}
-          {%if request.user.doc_stat != "ac"%}
               <p>
-              <a href="{%url 'doctor:register-doctor'%}" class="text-reset">Register doctor</a>
-            </p>
+                <a href="{%url 'doctor:register-doctor'%}" class="text-reset">Register doctor</a>
+              </p>
             {%endif%}
+
+
+
 
           </div>
         {%endif%}
