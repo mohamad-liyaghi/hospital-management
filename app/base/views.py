@@ -55,3 +55,12 @@ class ProfileView(LoginRequiredMixin,DetailView):
     def get_object(self, *args, **kwargs):
         object = get_object_or_404(BaseUser,username=self.kwargs['username'])
         return object
+
+
+def page_not_found(request, exception):
+    return render(request, "base-app/404.html", {})
+
+def server_error(request, exception=None):
+    return render(request, "base-app/other/500.html", {})
+
+

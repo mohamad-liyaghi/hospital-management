@@ -25,3 +25,7 @@ urlpatterns = [
     path("doctor/",include("app.doctor.urls")),
     path("admin/",include("app.admins.urls")),
 ]+ static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
+
+
+handler404 = 'app.base.views.page_not_found'
+handler500 = 'app.base.views.server_error'

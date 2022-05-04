@@ -1,0 +1,14 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {%block title%}Page not found :\{%endblock%}
+</head>
+<body>
+{%block body%}
+<h3>Page not found, please correct the url</h3>
+<a href="{%url 'base:home'%}">Home page</a>
+{%endblock%}
+</body>
+</html>
