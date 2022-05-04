@@ -19,7 +19,6 @@ from .forms import RegisterUserForm
 def homePage(request):
     return  render(request,"base-app/other/home.html")
 
-
 class loginPage(LoginMixin,LoginView):
     template_name = "base-app/authentication/login.html"
     def get_success_url(self):
@@ -49,7 +48,6 @@ def logoutView(request):
         return redirect('base:home')
     else:
         return redirect('base:login')
-
 
 
 class ProfileView(LoginRequiredMixin,DetailView):

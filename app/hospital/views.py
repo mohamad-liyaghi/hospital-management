@@ -51,7 +51,7 @@ class AcceptHospitalView(LoginRequiredMixin,ConfirmHospitalMixin,DetailView):
         hospital = Hospital.objects.filter(hospital_id=id)
         for i in hospital:
             BaseUser.objects.filter(username=i.owner).update(
-                hospital_to_request=i
+                hospital_to_request= i
             )
         hospital.update(status="a")
         return redirect("hospital:hospital-confirm-list")

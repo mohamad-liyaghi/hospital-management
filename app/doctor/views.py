@@ -104,4 +104,3 @@ class CloseMessageStatus(LoginRequiredMixin,MessageMixin,DetailView):
     def get(self,*args, **kwargs):
         object = Message.objects.filter(token=self.kwargs['token'])
         object.update(status="c")
-        return redirect("doctor:messages")
