@@ -10,7 +10,7 @@ from django.db import transaction
 
 import uuid
 
-from base.models import BaseUser, Doctor
+from base.models import BaseUser, Doctor, Admin
 from .mixins import LoginMixin
 from .forms import RegisterUserForm
 # Create your views here.
@@ -57,7 +57,8 @@ class ProfileView(LoginRequiredMixin,DetailView):
         return object
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
-        context['doctor_request'] = Doctor.objects.filter(applier=self.request.user)
+        context['doctor_request'] = Doctor.objects.filter(applier=BaseUser.objects.filter(username=self.kwargs['username'])[0], doctor_status="re")
+        context['admin_request'] = Admin.objects.filter(applier=BaseUser.objects.filter(username=self.kwargs['username'])[0], admin_stat="re")
         return context
 
 def page_not_found(request, exception):
