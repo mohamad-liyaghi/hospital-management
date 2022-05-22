@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from base.models import BaseUser
 from admins.models import Admin
-from .mixins import RegisterAdminMixin,ConfirmAdminPageMixin,ChangeAdminStatusMixin
+from .mixins import RegisterAdminMixin,ConfirmAdminPageMixin,ChangeAdminPageMixin
 from .forms import RegisterAdminForm
 # Create your views here.
 
@@ -30,13 +30,13 @@ class ConfirmAdminListView(LoginRequiredMixin,ConfirmAdminPageMixin, ListView):
         return object
 
 
-class AcceptAdminView(LoginRequiredMixin,DetailView):
+class AcceptAdminView(LoginRequiredMixin, ChangeAdminPageMixin, DetailView):
     def get(self,request,username, *args, **kwargs):
         BaseUser.objects.filter(username=self.kwargs['username']).update(user_status = "ad")
         Admin.objects.filter(applier__username=self.kwargs['username']).update(admin_stat= "ac")
         return redirect("admins:confrim-admin-list")
 
-class DeclineAdminView(LoginRequiredMixin,DetailView):
+class DeclineAdminView(LoginRequiredMixin, ChangeAdminPageMixin, DetailView):
     def get(self,request,username, *args, **kwargs):
         BaseUser.objects.filter(username=self.kwargs['username']).update(user_status = "pa")
         Admin.objects.filter(applier__username=self.kwargs['username']).update(admin_stat= "de")

@@ -1,22 +1,22 @@
 from django.shortcuts import redirect
+from admins.models import Admin
 class RegisterAdminMixin():
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.admin_stat == "dr" and request.user.doc_stat != "ac" or "re":
+        if self.request.user.user_status != "ad":
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("base:home")
 
 class ConfirmAdminPageMixin():
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.admin_stat == "ac":
+        if self.request.user.user_status == "ad":
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("base:home")
 
-
-class ChangeAdminStatusMixin():
+class ChangeAdminPageMixin():
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.admin_stat == "ac" and add_admin == True:
+        if self.request.user.user_status == "ad" and Admin.objects.filter(applier__username=self.kwargs.get["username"], admin_stat="re"):
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("base:home")

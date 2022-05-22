@@ -10,7 +10,7 @@ from base.models import BaseUser
 from doctor.models import Doctor
 from hospital.models import Hospital,Message
 from .forms import RegisterDoctorForm,MessageForm
-from .mixins import RegisterDoctorMixin,ConfirmDoctorMixin,MessageMixin
+from .mixins import RegisterDoctorMixin,ConfirmDoctorMixin, ConfirmDoctorPageMixin ,MessageMixin
 
 # Create your views here.
 class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
@@ -32,13 +32,13 @@ class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
         return redirect("base:home")
 
 
-class ConfirmDoctorListView(LoginRequiredMixin, ListView):
+class ConfirmDoctorListView(LoginRequiredMixin,ConfirmDoctorPageMixin, ListView):
     template_name = "doctor/ConfirmDoctor.html"
     def get_queryset(self):
         object = Doctor.objects.filter(doctor_status="re")
         return object
 
-class AcceptDoctorView(LoginRequiredMixin,DetailView):
+class AcceptDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
     def get(self,request, *args, **kwargs):
         Doctor.objects.filter(applier__username=self.kwargs['username']).update(doctor_status="ac")
         BaseUser.objects.filter(username=self.kwargs['username']).update(user_status="do")
