@@ -25,7 +25,7 @@ LOGOUT_REDIRECT_URL = "base:login"
 SECRET_KEY = 'django-insecure-1u3$fqtue(=0^v+)3rgq%e$+o=u3z4*he6$v1$mji!inknd37@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 

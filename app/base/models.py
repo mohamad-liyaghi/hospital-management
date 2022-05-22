@@ -56,9 +56,11 @@ class Doctor(models.Model):
         
     applier = models.ForeignKey(BaseUser,on_delete=models.CASCADE,blank=True, related_name="applier")
     doctor_id = models.PositiveIntegerField(blank=True,unique=True,null=True)
-    hospital_to_request = models.ManyToManyField(Hospital,blank=True)
+    hospital_to_request = models.ForeignKey(Hospital,blank=True, null=True, on_delete=models.CASCADE)
     more_info = models.TextField(blank=True,null=True)
     doctor_status = models.CharField(max_length=2, choices=doctor_status.choices, default=doctor_status.didnt_requested,blank=True,null=True)
+    def __str__(self) :
+        return self.applier.username
 
 class Admin(models.Model):
     class admin_status(models.TextChoices):
@@ -70,3 +72,5 @@ class Admin(models.Model):
     applier = models.ForeignKey(BaseUser,on_delete=models.CASCADE,blank=True, related_name="admin_applier")
     admin_stat = models.CharField(max_length=2, choices=admin_status.choices, default=admin_status.didnt_requested, blank=True, null=True)
     admin_description = models.TextField(blank=True,null=True)
+    def __str__(self) :
+        return self.applier.username

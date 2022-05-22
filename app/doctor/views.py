@@ -6,7 +6,7 @@ from django.db import transaction
 
 import uuid
 
-from base.models import BaseUser
+from base.models import BaseUser, Doctor
 from hospital.models import Hospital,Message
 from .forms import RegisterDoctorForm,MessageForm
 from .mixins import RegisterDoctorMixin,ConfirmDoctorMixin,MessageMixin
@@ -17,14 +17,13 @@ class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
     template_name = "doctor/RegisterDoctor.html"
     @transaction.atomic
     def form_valid(self, form):
-        user = BaseUser.objects.filter(username=self.request.user.username)
+        hospital_token = self.request.POST["hospital_token"]
         form = form.save(commit=False)
-        print(form.doc_stat)
-        form.doc_stat = "requested"
-        user.update(doctor_id=form.doctor_id,
-                    hospital_to_request=form.hospital_to_request,
-                    doc_stat="re",
-                    more_info=form.more_info)
+        form.applier = self.request.user
+        for hospital in Hospital.objects.filter(hospital_id=hospital_token):
+            form.hospital_to_request = hospital
+        form.doctor_status = "re"
+        form.save()
         messages.success(self.request, "request has been sent, please wait for results.")
         return redirect("base:home")
     def form_invalid(self, form):
@@ -32,22 +31,22 @@ class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
         return redirect("base:home")
 
 
-class ConfirmDoctorListView(LoginRequiredMixin,ConfirmDoctorMixin, ListView):
+class ConfirmDoctorListView(LoginRequiredMixin, ListView):
     template_name = "doctor/ConfirmDoctor.html"
     def get_queryset(self):
-        object = BaseUser.objects.filter(doc_stat="re")
+        object = Doctor.objects.filter(doctor_status="re")
         return object
 
-class AcceptDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
-    def get(self,request,username, *args, **kwargs):
-        object =BaseUser.objects.filter(username=self.kwargs['username'])
-        object.update(doc_stat="ac",user_status="do")
+class AcceptDoctorView(LoginRequiredMixin,DetailView):
+    def get(self,request, *args, **kwargs):
+        Doctor.objects.filter(applier__username=self.kwargs['username']).update(doctor_status="ac")
+        BaseUser.objects.filter(username=self.kwargs['username']).update(user_status="do")
         return redirect("doctor:confirm-doctor-page")
 
 class DeclineDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
     def get(self,request,username, *args, **kwargs):
-        object =BaseUser.objects.filter(username=self.kwargs['username'])
-        object.update(doc_stat="de",user_status="pa")
+        Doctor.objects.filter(applier__username=self.kwargs['username']).update(doctor_status="de")
+        BaseUser.objects.filter(username=self.kwargs['username']).update(user_status="pa")
         return redirect("doctor:confirm-doctor-page")
 
 

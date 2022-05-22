@@ -10,7 +10,7 @@ from django.db import transaction
 
 import uuid
 
-from base.models import BaseUser
+from base.models import BaseUser, Doctor
 from .mixins import LoginMixin
 from .forms import RegisterUserForm
 # Create your views here.
@@ -55,7 +55,10 @@ class ProfileView(LoginRequiredMixin,DetailView):
     def get_object(self, *args, **kwargs):
         object = get_object_or_404(BaseUser,username=self.kwargs['username'])
         return object
-
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['doctor_request'] = Doctor.objects.filter(applier=self.request.user)
+        return context
 
 def page_not_found(request, exception):
     return render(request, "base-app/404.html", {})

@@ -17,13 +17,13 @@
       <th scope="col">Page</th>
     </tr>
   </thead>
-  {%for users in object_list%}
+  {%for users in object_list %}
   <tbody>
     <tr>
-      <td>{{users.username}}</td>
+      <td>{{users.applier.username}}</td>
       <td>{{users.get_full_name}}</td>
-      <td><img src="{{users.picture.url}}" style="width:30px;"></td>
-      <td><a href="{%url 'base:profile' users.username%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
+      <td><img src="{{users.applier.picture.url}}" style="width:30px;"></td>
+      <td><a href="{%url 'base:profile' users.applier.username%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
     </tr>
   </tbody>
     {%endfor%}

@@ -1,12 +1,12 @@
 from django import forms
 from django.forms import ModelForm
-from base.models import BaseUser
+from base.models import Doctor
 from hospital.models import Message
 
 class RegisterDoctorForm(ModelForm):
     class Meta:
-        model = BaseUser
-        fields = ("doctor_id","hospital_to_request","more_info","doc_stat")
+        model = Doctor
+        fields = ("applier","doctor_id","hospital_to_request","more_info","doctor_status")
 
 
 class MessageForm(ModelForm):

@@ -13,9 +13,12 @@
 <form method="post">
     {% csrf_token %}
     {{form.doctor_id|as_crispy_field}}<br>
-    {{form.hospital_to_request|as_crispy_field}}<br>
     {{form.more_info|as_crispy_field}}<br>
-    <input type="submit" value="Request" class="btn-green">
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Hospital token</label>
+        <input type="text" class="form-control" name="hospital_token" required>
+      </div>
+      <input type="submit" value="Request" class="btn-green">
 </form>
 {%endblock%}
 </body>
