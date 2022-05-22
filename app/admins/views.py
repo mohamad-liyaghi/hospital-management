@@ -2,7 +2,8 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import FormView,ListView,DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from base.models import BaseUser, Admin
+from base.models import BaseUser
+from admins.models import Admin
 from .mixins import RegisterAdminMixin,ConfirmAdminPageMixin,ChangeAdminStatusMixin
 from .forms import RegisterAdminForm
 # Create your views here.

@@ -10,7 +10,9 @@ from django.db import transaction
 
 import uuid
 
-from base.models import BaseUser, Doctor, Admin
+from base.models import BaseUser
+from doctor.models import Doctor
+from admins.models import Admin
 from .mixins import LoginMixin
 from .forms import RegisterUserForm
 # Create your views here.

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from  base.models import Admin
+from  admins.models import Admin
 
 class RegisterAdminForm(ModelForm):
     class Meta:

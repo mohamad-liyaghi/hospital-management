@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from base.models import Doctor
+from doctor.models import Doctor
 from hospital.models import Message
 
 class RegisterDoctorForm(ModelForm):

@@ -6,7 +6,8 @@ from django.db import transaction
 
 import uuid
 
-from base.models import BaseUser, Doctor
+from base.models import BaseUser
+from doctor.models import Doctor
 from hospital.models import Hospital,Message
 from .forms import RegisterDoctorForm,MessageForm
 from .mixins import RegisterDoctorMixin,ConfirmDoctorMixin,MessageMixin
