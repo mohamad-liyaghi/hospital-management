@@ -62,7 +62,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':  [os.path.join(BASE_DIR, 'app/templates')],
+        'DIRS':  [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,11 +129,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_URL = "app/static/"
+
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    BASE_DIR / "app/static",
+    BASE_DIR / "static/",
 ]
-MEDIA_ROOT = os.path.join(BASE_DIR,'app/files')
+MEDIA_ROOT = os.path.join(BASE_DIR,'/files/')
 
 AUTH_USER_MODEL = "base.BaseUser"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
