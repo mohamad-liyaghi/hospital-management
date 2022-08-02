@@ -9,45 +9,44 @@
         <a class="nav-link " href="{%url 'base:home'%}">Home</a>
       </li>
       {%if request.user.is_authenticated%}
-      <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Register
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          {%if request.user.admin_stat == "ac"%}
-              <li><a class="dropdown-item" href="{%url 'hospital:register-hospital' %}">Register Hospital</a></li>
-          {%endif%}
-          {%if request.user.doc_stat != "ac" and "re" and request.user.admin_stat != "ac" and "re"%}
-              <li><a class="dropdown-item" href="{%url 'admins:register-admin'%}">Register Admin</a></li>
-          <li><a class="dropdown-item" href="{%url 'doctor:register-doctor'%}">Register Doctor</a></li>
-
-          {%endif%}
-        </ul>
-      </div>
-      <div class="dropdown">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Messages
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          {%if request.user.doc_stat == "ac"%}
-              <li><a class="dropdown-item" href="{%url 'doctor:unread-messages' %}">Unread Messages</a></li>
-              <li><a class="dropdown-item" href="{%url 'doctor:all-messages' %}">All Messages</a></li>
-          {%endif%}
-        </ul>
-      </div>
+        {% if request.user.user_status != "do" and request.user.user_status != "ad" %}
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Register
+          </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              {%if request.user.admin_applier.first.admin_stat == "ac"%}
+                  <li><a class="dropdown-item" href="{%url 'hospital:register-hospital' %}">Register Hospital</a></li>
+              {%endif%}
+                  <li><a class="dropdown-item" href="{%url 'admins:register-admin'%}">Register Admin</a></li>
+                  <li><a class="dropdown-item" href="{%url 'doctor:register-doctor'%}">Register Doctor</a></li>
+            </ul>
+          </div>
+        {%endif%}
+      {%if request.user.applier.first.doctor_status == "ac"%}
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Messages
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="{%url 'doctor:unread-messages' %}">Unread Messages</a></li>
+                <li><a class="dropdown-item" href="{%url 'doctor:all-messages' %}">All Messages</a></li>
+          </ul>
+        </div>
+      {%endif%}
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'base:profile' request.user.username %}">Profile</a>
+          </li>
         <li class="nav-item">
-          <a class="nav-link" href="{%url 'base:profile' request.user.username %}">Profile</a>
-        </li>
-      <li class="nav-item">
-          <a class="nav-link" href="{%url 'base:logout' %}">Logout</a>
-        </li>
+            <a class="nav-link" href="{%url 'base:logout' %}">Logout</a>
+          </li>
       {%else%}
-      <li class="nav-item">
-        <a class="nav-link" href="{%url 'base:register' %}">Register</a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="{%url 'base:login' %}">login</a>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'base:register' %}">Register</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{%url 'base:login' %}">login</a>
+          </li>
       {%endif%}
     </ul>
   </div>
