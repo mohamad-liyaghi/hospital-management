@@ -21,35 +21,6 @@ from .forms import RegisterUserForm
 def homePage(request):
     return  render(request,"base-app/other/home.html")
 
-class loginPage(LoginMixin,LoginView):
-    template_name = "base-app/account/login.html"
-    def get_success_url(self):
-        messages.success(self.request,"you are now logged in")
-        return reverse_lazy('base:home')
-
-class registerPage(LoginMixin,CreateView):
-    form_class = RegisterUserForm
-    template_name = 'base-app/account/signup.html'
-    @transaction.atomic
-    def form_valid(self, form):
-        user = self.form_class(self.request.POST, self.request.FILES)
-        user = user.save(commit=False)
-        user.username = user.first_name+user.last_name+uuid.uuid4().hex.upper()[0:4]
-        user.token = uuid.uuid4().hex.upper()[0:15]
-        user.save()
-        messages.success(self.request, "you are now registered")
-        return redirect('base:home')
-    def form_invalid(self, form):
-        messages.success(self.request, "sth went wrong, please try again")
-
-
-def logoutView(request):
-    if request.user.is_authenticated:
-        logout(request)
-        messages.success(request, "you were logged out!")
-        return redirect('base:home')
-    else:
-        return redirect('base:login')
 
 
 class ProfileView(LoginRequiredMixin,DetailView):

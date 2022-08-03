@@ -1,11 +1,5 @@
 from django.urls import path
-from .views import (homePage,
-                    loginPage,
-                    logoutView,
-                    registerPage,
-                    ProfileView,
-
-                    )
+from .views import (homePage, ProfileView,)
 
 app_name = "base"
 
