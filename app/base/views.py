@@ -22,14 +22,14 @@ def homePage(request):
     return  render(request,"base-app/other/home.html")
 
 class loginPage(LoginMixin,LoginView):
-    template_name = "base-app/authentication/login.html"
+    template_name = "base-app/account/login.html"
     def get_success_url(self):
         messages.success(self.request,"you are now logged in")
         return reverse_lazy('base:home')
 
 class registerPage(LoginMixin,CreateView):
     form_class = RegisterUserForm
-    template_name = 'base-app/authentication/register.html'
+    template_name = 'base-app/account/register.html'
     @transaction.atomic
     def form_valid(self, form):
         user = self.form_class(self.request.POST, self.request.FILES)

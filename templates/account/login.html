@@ -1,0 +1,27 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {%block title%}Login{%endblock%}
+</head>
+<body>
+{%block body%}
+<h1>Login page</h1>
+<br/>
+		<form action="" method=POST>
+			{% csrf_token %}
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" name="login" class="form-control" name="email" autocomplete="email" placeholder="Enter your email" aria-describedby="emailHelp" required="" id="id_login">
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password"  class="form-control" placeholder="Enter your password" name="password" autocomplete="current-password"  required="" id="id_password">
+              </div>
+                    <input type="submit" value="Login" class="btn-green">
+		</form>
+<br/><br/>
+{%endblock%}
+</body>
+</html>

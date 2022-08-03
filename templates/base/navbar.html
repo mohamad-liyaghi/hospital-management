@@ -38,14 +38,14 @@
             <a class="nav-link" href="{%url 'base:profile' request.user.username %}">Profile</a>
           </li>
         <li class="nav-item">
-            <a class="nav-link" href="{%url 'base:logout' %}">Logout</a>
+            <a class="nav-link" href="{%url 'account_logout' %}">Logout</a>
           </li>
       {%else%}
         <li class="nav-item">
-          <a class="nav-link" href="{%url 'base:register' %}">Register</a>
+          <a class="nav-link" href="{%url 'account_signup' %}">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{%url 'base:login' %}">login</a>
+            <a class="nav-link" href="{%url 'account_login' %}">login</a>
           </li>
       {%endif%}
     </ul>

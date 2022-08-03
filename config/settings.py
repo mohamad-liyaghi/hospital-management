@@ -39,11 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'crispy_forms',
+    'allauth',
+    'allauth.account',
+
     'app.base.apps.BaseConfig',
     'app.hospital.apps.HospitalConfig',
     'app.doctor.apps.DoctorConfig',
     'app.admins.apps.AdminsConfig',
+
     'django_cleanup.apps.CleanupConfig',
 ]
 
@@ -138,3 +143,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'/files/')
 
 AUTH_USER_MODEL = "base.BaseUser"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+SITE_ID = 1
+
+# allauth configs
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend"
+)
+
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+LOGIN_REDIRECT_URL = 'base:home'
