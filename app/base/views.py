@@ -55,7 +55,7 @@ def logoutView(request):
 class ProfileView(LoginRequiredMixin,DetailView):
     template_name = "base-app/other/profile.html"
     def get_object(self, *args, **kwargs):
-        object = get_object_or_404(BaseUser,username=self.kwargs['username'])
+        object = get_object_or_404(BaseUser, id= self.kwargs["id"], email=self.kwargs['email'])
         return object
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)

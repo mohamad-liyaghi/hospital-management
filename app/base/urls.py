@@ -11,7 +11,7 @@ app_name = "base"
 
 urlpatterns = [
     path("",homePage,name="home"),
-    path("profile/<str:username>/",ProfileView.as_view(),name="profile"),
+    path("profile/<int:id>/<str:email>/",ProfileView.as_view(),name="profile"),
 
 
 ]
