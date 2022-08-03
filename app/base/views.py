@@ -29,7 +29,7 @@ class loginPage(LoginMixin,LoginView):
 
 class registerPage(LoginMixin,CreateView):
     form_class = RegisterUserForm
-    template_name = 'base-app/account/register.html'
+    template_name = 'base-app/account/signup.html'
     @transaction.atomic
     def form_valid(self, form):
         user = self.form_class(self.request.POST, self.request.FILES)

@@ -1,0 +1,22 @@
+{%extends 'base/base.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load crispy_forms_tags %}
+    <meta charset="UTF-8">
+    {%block title%}Register{%endblock%}
+</head>
+<body>
+{%block body%}
+<h1>Register page</h1>
+<br/>
+		<form enctype="multipart/form-data" action="" method=POST>
+			{% csrf_token %}
+            {{ form|crispy }}
+
+            <input type="submit" value="Register" class="btn-green">
+		</form>
+<br/><br/>
+{%endblock%}
+</body>
+</html>
