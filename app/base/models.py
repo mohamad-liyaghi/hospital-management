@@ -1,24 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from hospital.models import Hospital
-import uuid
+import random
 # Create your models here.
 
 class UserManager(BaseUserManager):
     '''
         Manager for creating user
     '''
-    def create_user(self, email, first_name, last_name, picture, birthday, user_id, description, token, user_status, password):
+    def create_user(self, email, first_name, last_name, picture, birthday, user_id, description, user_status, password):
         '''
             Create a user
         '''
         if not email:
             raise ValueError("Email is required")
 
-        user = self.model(email= email, username= email,
+        user = self.model(email= email,
                           first_name= first_name, last_name= last_name, picture=picture,
                           birthday= birthday, user_id=user_id, description=description,
-                          token= uuid.uuid4().hex.upper()[0:15], user_status= "patient"
+                          token= random.randint(1, 99999999999999), user_status= "admin"
         )
         user.set_password(password)
         user.save(using=self._db)
@@ -26,11 +26,11 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, first_name, last_name, user_id, password):
         # create new superuser
-        user = self.model(email=email, username= email,
+        user = self.model(email=email,
                           user_status="su",
                           first_name=first_name, last_name=last_name,
                           user_id=user_id, description="This user is root",
-                          token=uuid.uuid4().hex.upper()[0:15]
+                          token=random.randint(1, 99999999999999)
                           )
 
         user.set_password(password)
@@ -49,6 +49,7 @@ class BaseUser(AbstractUser):
 
     picture = models.ImageField(blank=True,null=True, upload_to="user-profiles/")
     email = models.EmailField(unique=True)
+    username = None
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     description = models.TextField(blank=True,null=True)
