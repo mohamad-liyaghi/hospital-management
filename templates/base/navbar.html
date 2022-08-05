@@ -9,6 +9,7 @@
         <a class="nav-link " href="{%url 'base:home'%}">Home</a>
       </li>
       {%if request.user.is_authenticated%}
+      {% if not request.user.is_superuser %}
         {% if request.user.user_status != "do" and request.user.user_status != "ad" %}
         <div class="dropdown">
           <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -23,6 +24,7 @@
             </ul>
           </div>
         {%endif%}
+      {% endif %}
       {%if request.user.applier.first.doctor_status == "ac"%}
         <div class="dropdown">
           <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

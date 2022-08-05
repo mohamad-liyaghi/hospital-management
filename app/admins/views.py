@@ -32,12 +32,12 @@ class ConfirmAdminListView(LoginRequiredMixin,ConfirmAdminPageMixin, ListView):
 
 class AcceptAdminView(LoginRequiredMixin, ChangeAdminPageMixin, DetailView):
     def get(self,request,username, *args, **kwargs):
-        BaseUser.objects.filter(username=self.kwargs['username']).update(user_status = "ad")
-        Admin.objects.filter(applier__username=self.kwargs['username']).update(admin_stat= "ac")
+        BaseUser.objects.filter(email=self.kwargs['email']).update(user_status = "ad")
+        Admin.objects.filter(applier__email=self.kwargs['email']).update(admin_stat= "ac")
         return redirect("admins:confrim-admin-list")
 
 class DeclineAdminView(LoginRequiredMixin, ChangeAdminPageMixin, DetailView):
     def get(self,request,username, *args, **kwargs):
-        BaseUser.objects.filter(username=self.kwargs['username']).update(user_status = "pa")
-        Admin.objects.filter(applier__username=self.kwargs['username']).update(admin_stat= "de")
+        BaseUser.objects.filter(email=self.kwargs['email']).update(user_status = "pa")
+        Admin.objects.filter(applier__email=self.kwargs['email']).update(admin_stat= "de")
         return redirect("admins:confrim-admin-list")

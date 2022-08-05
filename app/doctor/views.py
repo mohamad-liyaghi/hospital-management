@@ -40,14 +40,14 @@ class ConfirmDoctorListView(LoginRequiredMixin,ConfirmDoctorPageMixin, ListView)
 
 class AcceptDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
     def get(self,request, *args, **kwargs):
-        Doctor.objects.filter(applier__username=self.kwargs['username']).update(doctor_status="ac")
-        BaseUser.objects.filter(username=self.kwargs['username']).update(user_status="do")
+        Doctor.objects.filter(applier__email=self.kwargs['email']).update(doctor_status="ac")
+        BaseUser.objects.filter(email=self.kwargs['email']).update(user_status="do")
         return redirect("doctor:confirm-doctor-page")
 
 class DeclineDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
     def get(self,request,username, *args, **kwargs):
-        Doctor.objects.filter(applier__username=self.kwargs['username']).update(doctor_status="de")
-        BaseUser.objects.filter(username=self.kwargs['username']).update(user_status="pa")
+        Doctor.objects.filter(applier__email=self.kwargs['email']).update(doctor_status="de")
+        BaseUser.objects.filter(email=self.kwargs['email']).update(user_status="pa")
         return redirect("doctor:confirm-doctor-page")
 
 
