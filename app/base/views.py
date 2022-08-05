@@ -25,13 +25,14 @@ def homePage(request):
 
 class ProfileView(LoginRequiredMixin,DetailView):
     template_name = "base-app/other/profile.html"
+    context_object_name = "user"
     def get_object(self, *args, **kwargs):
         object = get_object_or_404(BaseUser, id= self.kwargs["id"], email=self.kwargs['email'])
         return object
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
-        context['doctor_request'] = Doctor.objects.filter(applier=BaseUser.objects.filter(username=self.kwargs['username'])[0], doctor_status="re")
-        context['admin_request'] = Admin.objects.filter(applier=BaseUser.objects.filter(username=self.kwargs['username'])[0], admin_stat="re")
+        context['doctor_request'] = self.request.user.applier.filter(doctor_status = "re")
+        context['admin_request'] = self.request.user.admin_applier.filter(admin_stat= "re")
         return context
 
 def page_not_found(request, exception):
