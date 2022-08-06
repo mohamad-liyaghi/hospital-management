@@ -11,7 +11,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Username</th>
+      <th scope="col">Email</th>
       <th scope="col">Name</th>
       <th scope="col">Profile</th>
       <th scope="col">Page</th>
@@ -20,10 +20,12 @@
   {%for users in object_list %}
   <tbody>
     <tr>
-      <td>{{users.applier.username}}</td>
+      <td>{{users.applier.email}}</td>
       <td>{{users.get_full_name}}</td>
-      <td><img src="{{users.applier.picture.url}}" style="width:30px;"></td>
-      <td><a href="{%url 'base:profile' users.applier.username%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
+      {% if users.applier.picture %}
+        <td><img src="{{users.applier.picture.url}}" style="width:30px;"></td>
+      {% endif %}
+      <td><a href="{%url 'base:profile' users.applier.id users.applier.email%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
     </tr>
   </tbody>
     {%endfor%}

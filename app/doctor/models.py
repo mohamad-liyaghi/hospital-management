@@ -15,4 +15,4 @@ class Doctor(models.Model):
     more_info = models.TextField(blank=True,null=True)
     doctor_status = models.CharField(max_length=2, choices=doctor_status.choices, default=doctor_status.didnt_requested,blank=True,null=True)
     def __str__(self) :
-        return self.applier.username
+        return self.applier.email

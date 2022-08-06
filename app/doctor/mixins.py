@@ -9,14 +9,14 @@ class RegisterDoctorMixin():
 
 class ConfirmDoctorMixin():
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.user_status == "ad" and Doctor.objects.filter(applier__username=self.kwargs['username'], doctor_status="re"):
+        if self.request.user.user_status == "ad" or self.request.user.user_status == "su" :
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("base:home")
 
 class ConfirmDoctorPageMixin():
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.user_status == "ad":
+        if self.request.user.user_status == "ad" or self.request.user.user_status == "su" :
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("base:home")

@@ -6,24 +6,37 @@
     <ul class="navbar-nav mr-auto">
         <a class="navbar-brand" style="margin-left:10px;" href="#"><i class="fa-solid fa-hospital"></i></a>
       <li class="nav-item active">
-        <a class="nav-link " href="{%url 'base:home'%}">Home</a>
+        <a class="nav-link " href="{%url 'base:home'%}">Home  </a>
       </li>
       {%if request.user.is_authenticated%}
       {% if not request.user.is_superuser %}
         {% if request.user.user_status != "do" and request.user.user_status != "ad" %}
+          {% if request.user.admin_applier.count == 0 and request.user.applier.count == 0 %}
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Register
+              </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  {%if request.user.admin_applier.first.admin_stat == "ac"%}
+                      <li><a class="dropdown-item" href="{%url 'hospital:register-hospital' %}">Register Hospital</a></li>
+                  {%endif%}
+                      <li><a class="dropdown-item" href="{%url 'admins:register-admin'%}">Register Admin</a></li>
+                      <li><a class="dropdown-item" href="{%url 'doctor:register-doctor'%}">Register Doctor</a></li>
+                </ul>
+              </div>
+      {%endif%}
+     {%endif%}
+      {% endif %}
+      {% if request.user.is_superuser or request.user.user_status == "ad" %}
         <div class="dropdown">
-          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Register
-          </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              {%if request.user.admin_applier.first.admin_stat == "ac"%}
-                  <li><a class="dropdown-item" href="{%url 'hospital:register-hospital' %}">Register Hospital</a></li>
-              {%endif%}
-                  <li><a class="dropdown-item" href="{%url 'admins:register-admin'%}">Register Admin</a></li>
-                  <li><a class="dropdown-item" href="{%url 'doctor:register-doctor'%}">Register Doctor</a></li>
-            </ul>
-          </div>
-        {%endif%}
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Pages
+              </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="{%url 'doctor:confirm-doctor-page'%}">Doctor requests</a></li>
+                      <li><a class="dropdown-item" href="{%url 'admins:confrim-admin-list'%}">Admin requests</a></li>
+                </ul>
+              </div>
       {% endif %}
       {%if request.user.applier.first.doctor_status == "ac"%}
         <div class="dropdown">

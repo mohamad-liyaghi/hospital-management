@@ -11,4 +11,4 @@ class Admin(models.Model):
     admin_stat = models.CharField(max_length=2, choices=admin_status.choices, default=admin_status.didnt_requested, blank=True, null=True)
     admin_description = models.TextField(blank=True,null=True)
     def __str__(self) :
-        return self.applier.username
+        return self.applier.email
