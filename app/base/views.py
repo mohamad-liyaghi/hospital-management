@@ -31,8 +31,9 @@ class ProfileView(LoginRequiredMixin,DetailView):
         return object
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
-        context['doctor_request'] = self.request.user.applier.filter(doctor_status = "re")
-        context['admin_request'] = self.request.user.admin_applier.filter(admin_stat= "re")
+        user = BaseUser.objects.filter(email= self.kwargs["email"], pk= self.kwargs["id"]).first()
+        context['doctor_request'] = user.applier.filter(doctor_status = "re")
+        context['admin_request'] = user.admin_applier.filter(admin_stat= "re")
         return context
 
 def page_not_found(request, exception):

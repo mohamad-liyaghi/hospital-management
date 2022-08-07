@@ -31,7 +31,7 @@ class ConfirmAdminListView(LoginRequiredMixin,ConfirmAdminPageMixin, ListView):
 
 
 class AcceptAdminView(LoginRequiredMixin, ChangeAdminPageMixin, DetailView):
-    def get(self,request,username, *args, **kwargs):
+    def get(self,request, email, *args, **kwargs):
         BaseUser.objects.filter(email=self.kwargs['email']).update(user_status = "ad")
         Admin.objects.filter(applier__email=self.kwargs['email']).update(admin_stat= "ac")
         return redirect("admins:confrim-admin-list")

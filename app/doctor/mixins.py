@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from doctor.models import Doctor
 class RegisterDoctorMixin():
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.user_status != "ad":
+        if not self.request.user.applier or self.request.user.admin_applier:
             return super().dispatch(request, *args, **kwargs)
         else:
             return redirect("base:home")
