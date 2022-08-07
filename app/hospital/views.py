@@ -8,10 +8,10 @@ from base.models import BaseUser
 from .models import Hospital
 from base.models import BaseUser
 from .forms import RegisterHospitalForm
-from .mixins import ConfirmHospitalMixin
+from .mixins import ConfirmHospitalMixin, HospitalViewMixin
 # Create your views here.
 
-class RegisterHospitalView(LoginRequiredMixin,FormView):
+class RegisterHospitalView(LoginRequiredMixin, HospitalViewMixin,FormView):
     form_class = RegisterHospitalForm
     template_name = "hospital/Register_hospital.html"
     @transaction.atomic

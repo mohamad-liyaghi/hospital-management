@@ -12,7 +12,7 @@ class Hospital(models.Model):
     hospital_id = models.CharField(max_length=20,unique=True)
     phone_number = models.CharField(max_length=12)
     status = models.CharField(max_length=2,choices=status.choices,default=status.no_answer,blank=True,null=True)
-    owner = models.ForeignKey(to="base.BaseUser",on_delete=models.CASCADE,blank=True,null=True)
+    owner = models.ForeignKey(to="base.BaseUser", on_delete=models.CASCADE, blank=True, null=True, related_name="hospital_owner")
     description = models.TextField()
     def __str__(self):
         return self.name
