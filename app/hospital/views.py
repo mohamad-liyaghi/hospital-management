@@ -48,22 +48,23 @@ class HospitalProfileView(LoginRequiredMixin,DetailView):
 class AcceptHospitalView(LoginRequiredMixin,ConfirmHospitalMixin,DetailView):
     def get(self,request, *args, **kwargs):
         id = self.kwargs['id']
-        hospital = Hospital.objects.filter(hospital_id=id)
-        for i in hospital:
-            BaseUser.objects.filter(username=i.owner).update(
-                hospital_to_request= i
-            )
-        hospital.update(status="a")
+        hospital_id = self.kwargs["hospital_id"]
+
+        hospital = Hospital.objects.filter(id= id, hospital_id=hospital_id).first()
+        print(hospital)
+
+        hospital.status = "a"
+        hospital.save()
         return redirect("hospital:hospital-confirm-list")
 
 class DeclineHospitalView(LoginRequiredMixin,ConfirmHospitalMixin,DetailView):
     def get(self, request, *args, **kwargs):
         id = self.kwargs['id']
-        hospital = Hospital.objects.filter(hospital_id=id)
-        for i in hospital:
-            BaseUser.objects.filter(username=i.owner).update(
-                hospital_to_request=None
-            )
-        hospital.update(status="d")
+        hospital_id = self.kwargs["hospital_id"]
+
+        hospital = Hospital.objects.filter(id= id, hospital_id=hospital_id).first()
+
+        hospital.status = "r"
+        hospital.save()
         return redirect("hospital:hospital-confirm-list")
 

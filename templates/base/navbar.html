@@ -35,6 +35,8 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                       <li><a class="dropdown-item" href="{%url 'doctor:confirm-doctor-page'%}">Doctor requests</a></li>
                       <li><a class="dropdown-item" href="{%url 'admins:confrim-admin-list'%}">Admin requests</a></li>
+                      <li><a class="dropdown-item" href="{%url 'hospital:hospital-confirm-list'%}">Hospital requests</a></li>
+
                         {%if request.user.hospital_owner.count == 0 %}
                           <li><a class="dropdown-item" href="{%url 'hospital:register-hospital' %}">Register Hospital</a></li>
                         {%endif%}

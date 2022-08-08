@@ -19,12 +19,11 @@
 <h6>doctor id: {{object.doctor_id}}</h6><br>
 <h6>Hospital: {{object.hospital_to_request}}</h6><br>
 {%endif%}
-{%if request.user.admin_stat == "ac"%}
+{%if request.user.user_status == "ad" or request.user.is_superuser%}
     {%if object.status == "n"%}
         <h6>hospital description: {{object.more_info}}</h6><br>
-        <a href="{%url 'hospital:accept-hospital' object.hospital_id%}"><input class="btn-green" value="Accept" ></a>
-    {%elif object.status == "a" %}
-        <a href="{%url 'hospital:decline-hospital' object.hospital_id%}"><input class="btn-red" value="Decline" style=""></a>
+        <a href="{%url 'hospital:accept-hospital' object.pk object.hospital_id %}"><input class="btn-green" value="Accept" ></a>
+        <a href="{%url 'hospital:decline-hospital' object.pk object.hospital_id  %}"><input class="btn-red" value="Decline" style=""></a>
     {%endif%}
 {%endif%}
 {%endblock%}
