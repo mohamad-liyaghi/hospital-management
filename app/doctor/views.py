@@ -19,11 +19,13 @@ class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
     @transaction.atomic
     def form_valid(self, form):
         hospital_token = self.request.POST["hospital_token"]
+        hospital = Hospital.objects.filter(hospital_id=hospital_token).first()
+
         form = form.save(commit=False)
         form.applier = self.request.user
-        for hospital in Hospital.objects.filter(hospital_id=hospital_token):
-            form.hospital_to_request = hospital
+        form.hospital_to_request = hospital
         form.doctor_status = "re"
+
         form.save()
         messages.success(self.request, "request has been sent, please wait for results.")
         return redirect("base:home")
@@ -58,17 +60,19 @@ class SendMessage(LoginRequiredMixin,MessageMixin,FormView):
     def form_valid(self, form):
         patient_id =self.request.POST["patient_id"]
         hospital_id = self.request.POST["hospital_id"]
+
+        patient = BaseUser.objects.filter(user_id=patient_id).first()
+        hospital = Hospital.objects.filter(hospital_id=hospital_id).first()
+
         form = form.save(commit=False)
         form.token = uuid.uuid4().hex.upper()[0:10]
         form.doctor = self.request.user
-        user = BaseUser.objects.filter(user_id=patient_id)
-        for patient in  user:
-            form.patient = patient
-        for hospital in Hospital.objects.filter(hospital_id=hospital_id):
-            form.to_hospital  = hospital
+        form.patient = patient
+        form.to_hospital  = hospital
         form.save()
         messages.success(self.request, "message sent.")
         return redirect("base:home")
+
     def form_invalid(self, form):
         messages.success(self.request, "sth went wrong...")
 
@@ -76,14 +80,16 @@ class SendMessage(LoginRequiredMixin,MessageMixin,FormView):
 class UnreadMessageList(LoginRequiredMixin,MessageMixin,ListView):
     template_name = "doctor/MessageList.html"
     def get_queryset(self):
-        object = Message.objects.filter(to_hospital=self.request.user.hospital_to_request
-                                        ,status=["s","r"])
+        user = self.request.user.applier.first()
+        object = Message.objects.filter(to_hospital=user.hospital_to_request,
+                                        status=["s","r"])
         return object
 
 class AllMessageList(LoginRequiredMixin,MessageMixin,ListView):
     template_name = "doctor/MessageList.html"
     def get_queryset(self):
-        object = Message.objects.filter(to_hospital=self.request.user.hospital_to_request)
+        user = self.request.user.applier.first()
+        object = Message.objects.filter(to_hospital= user.hospital_to_request)
         return object
 
 class MessageDetail(LoginRequiredMixin,MessageMixin,DetailView):
@@ -96,11 +102,13 @@ class MessageDetail(LoginRequiredMixin,MessageMixin,DetailView):
 
 class ReadMessageStatus(LoginRequiredMixin,MessageMixin,DetailView):
     def get(self,*args, **kwargs):
-        object = Message.objects.filter(token=self.kwargs['token'])
+        token = self.kwargs['token']
+        object = Message.objects.filter(token= token)
         object.update(status="r")
-        return redirect("doctor:messages")
+        return redirect("doctor:message-detail", token= token)
 
 class CloseMessageStatus(LoginRequiredMixin,MessageMixin,DetailView):
     def get(self,*args, **kwargs):
-        object = Message.objects.filter(token=self.kwargs['token'])
+        object = get_object_or_404(Message, token=self.kwargs['token'])
         object.update(status="c")
+        return  redirect("doctor:unread-messages")
