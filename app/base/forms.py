@@ -6,9 +6,11 @@ import random
 
 class RegisterUserForm(UserCreationForm):
     token = forms.CharField(widget = forms.HiddenInput(), required = False)
+
     class Meta:
         model = BaseUser
         fields = ('first_name','last_name','email','picture','birthday','description','user_id', "token")
+
         help_texts = {
             'first_name': "Enter your first name",
             'last_name' : "Enter your last name",
@@ -18,6 +20,7 @@ class RegisterUserForm(UserCreationForm):
         }
 
     def save(self, commit=True):
+        # generate a custom token
         user = super(RegisterUserForm, self).save(commit=False)
         user.token = random.randint(1, 99999999999999)
         if commit:

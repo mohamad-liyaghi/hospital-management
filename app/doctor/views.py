@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.views.generic import FormView,ListView,DetailView
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import FormView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db import transaction
@@ -8,12 +8,13 @@ import uuid
 
 from base.models import BaseUser
 from doctor.models import Doctor
-from hospital.models import Hospital,Message
-from .forms import RegisterDoctorForm,MessageForm
-from .mixins import RegisterDoctorMixin,ConfirmDoctorMixin, ConfirmDoctorPageMixin ,MessageMixin
+from hospital.models import Hospital, Message
+from .forms import RegisterDoctorForm, MessageForm
+from .mixins import RegisterDoctorMixin, ConfirmDoctorMixin, ConfirmDoctorPageMixin, MessageMixin
 
 # Create your views here.
 class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
+    '''Register a doctor'''
     form_class = RegisterDoctorForm
     template_name = "doctor/RegisterDoctor.html"
     @transaction.atomic
@@ -35,21 +36,36 @@ class RegisterDoctorView(LoginRequiredMixin,RegisterDoctorMixin,FormView):
 
 
 class ConfirmDoctorListView(LoginRequiredMixin,ConfirmDoctorPageMixin, ListView):
+    '''List of doctor requests'''
     template_name = "doctor/ConfirmDoctor.html"
     def get_queryset(self):
         object = Doctor.objects.filter(doctor_status="re")
         return object
 
 class AcceptDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
+    '''Accept a doctor request'''
     def get(self,request, *args, **kwargs):
-        Doctor.objects.filter(applier__email=self.kwargs['email']).update(doctor_status="ac")
-        BaseUser.objects.filter(email=self.kwargs['email']).update(user_status="do")
+        doctor = get_object_or_404(Doctor, applier__email=self.kwargs['email'])
+        user = get_object_or_404(BaseUser, email=self.kwargs['email'])
+
+        doctor.doctor_status = "ac"
+        user.user_status = "do"
+
+        doctor.save()
+        user.save()
         return redirect("doctor:confirm-doctor-page")
 
 class DeclineDoctorView(LoginRequiredMixin,ConfirmDoctorMixin,DetailView):
+    '''Decline a doctor request'''
     def get(self,request,username, *args, **kwargs):
-        Doctor.objects.filter(applier__email=self.kwargs['email']).update(doctor_status="de")
-        BaseUser.objects.filter(email=self.kwargs['email']).update(user_status="pa")
+        doctor = get_object_or_404(Doctor, applier__email=self.kwargs['email'])
+        user = get_object_or_404(BaseUser, email=self.kwargs['email'])
+
+        doctor.doctor_status = "de"
+        user.user_status = "pa"
+
+        doctor.save()
+        user.save()
         return redirect("doctor:confirm-doctor-page")
 
 

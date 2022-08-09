@@ -1,9 +1,8 @@
-from django.shortcuts import render,redirect,get_object_or_404
-from django.views.generic import FormView,ListView,DetailView
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import FormView ,ListView, DetailView
 from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from base.models import BaseUser
 
 from .models import Hospital
 from base.models import BaseUser
@@ -12,6 +11,7 @@ from .mixins import ConfirmHospitalMixin, HospitalViewMixin
 # Create your views here.
 
 class RegisterHospitalView(LoginRequiredMixin, HospitalViewMixin,FormView):
+    '''Register a Hospital'''
     form_class = RegisterHospitalForm
     template_name = "hospital/Register_hospital.html"
     @transaction.atomic
@@ -23,6 +23,7 @@ class RegisterHospitalView(LoginRequiredMixin, HospitalViewMixin,FormView):
         hospital.save()
         messages.success(self.request,"request has been sent, please wait for results.")
         return redirect("base:home")
+
     def form_invalid(self, form):
         print(form.errors)
         messages.success(self.request, "sth went wrong, please try again later")
@@ -32,6 +33,7 @@ class RegisterHospitalView(LoginRequiredMixin, HospitalViewMixin,FormView):
 
 
 class ConfirmHospitalListView(LoginRequiredMixin,ConfirmHospitalMixin, ListView):
+    '''List of hospital requests'''
     template_name = "hospital/ConfirmHospital.html"
     def get_queryset(self):
         object = Hospital.objects.filter(status="n")
@@ -39,6 +41,7 @@ class ConfirmHospitalListView(LoginRequiredMixin,ConfirmHospitalMixin, ListView)
 
 
 class HospitalProfileView(LoginRequiredMixin,DetailView):
+    '''Hospital profile page'''
     template_name = "hospital/HospitalProfile.html"
     def get_object(self, *args, **kwargs):
         object = get_object_or_404(Hospital,hospital_id=self.kwargs['id'])
@@ -50,8 +53,7 @@ class AcceptHospitalView(LoginRequiredMixin,ConfirmHospitalMixin,DetailView):
         id = self.kwargs['id']
         hospital_id = self.kwargs["hospital_id"]
 
-        hospital = Hospital.objects.filter(id= id, hospital_id=hospital_id).first()
-        print(hospital)
+        hospital = get_object_or_404(Hospital, id= id, hospital_id=hospital_id)
 
         hospital.status = "a"
         hospital.save()
@@ -62,7 +64,7 @@ class DeclineHospitalView(LoginRequiredMixin,ConfirmHospitalMixin,DetailView):
         id = self.kwargs['id']
         hospital_id = self.kwargs["hospital_id"]
 
-        hospital = Hospital.objects.filter(id= id, hospital_id=hospital_id).first()
+        hospital = get_object_or_404(Hospital, id= id, hospital_id=hospital_id)
 
         hospital.status = "r"
         hospital.save()
