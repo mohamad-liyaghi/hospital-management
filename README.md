@@ -16,6 +16,7 @@
 <p>Doctors can send messages and share patients info with other doctors in order to treatment.</p>
 
 ## How to use?
+
 ### Step 1:
 ```
 $ git clone https://github.com/Ml06py/hospital-management.git
@@ -25,6 +26,11 @@ $ git clone https://github.com/Ml06py/hospital-management.git
 ```
 $ cd hospital-management
 ```
+#### With docker
+```
+$ docker-compose up --build
+```
+#### Without docker
 ### Step 3:
 ```
 $ pip install -r requirements.txt
