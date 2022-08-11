@@ -18,16 +18,18 @@
     </tr>
   </thead>
   {%for users in object_list %}
-  <tbody>
-    <tr>
-      <td>{{users.applier.email}}</td>
-      <td>{{users.get_full_name}}</td>
-      {% if users.applier.picture %}
-        <td><img src="{{users.applier.picture.url}}" style="width:30px;"></td>
-      {% endif %}
-      <td><a href="{%url 'base:profile' users.applier.id users.applier.email%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
-    </tr>
-  </tbody>
+      <tbody>
+        <tr>
+          <td>{{users.applier.email}}</td>
+          <td>{{users.get_full_name}}</td>
+          {% if users.applier.picture %}
+            <td><img src="{{users.applier.picture.url}}" style="width:30px;"></td>
+          {% endif %}
+          <td><a href="{%url 'base:profile' users.applier.id users.applier.email%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
+        </tr>
+      </tbody>
+    {% empty %}
+      <h3>There is no doctor request</h3>
     {%endfor%}
 </table>
 {%endblock%}

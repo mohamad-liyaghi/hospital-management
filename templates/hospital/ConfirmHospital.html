@@ -18,16 +18,18 @@
     </tr>
   </thead>
   {%for hospital in object_list%}
-  <tbody>
-    <tr>
-      <td>{{hospital.name}}</td>
-      <td>{{hospital.address}}</td>
-      <td><img src="{{hospital.picture.url}}" style="width:30px;"></td>
-      <td><a href="{%url 'hospital:profile' hospital.hospital_id%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
-    </tr>
-  </tbody>
+    <tbody>
+      <tr>
+        <td>{{hospital.name}}</td>
+        <td>{{hospital.address}}</td>
+        <td><img src="{{hospital.picture.url}}" style="width:30px;"></td>
+        <td><a href="{%url 'hospital:profile' hospital.hospital_id%}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
+      </tr>
+    </tbody>
+    {% empty %}
+      <h3>There is no hospital request</h3>
     {%endfor%}
-</table>
+  </table>
 {%endblock%}
 </body>
 </html>

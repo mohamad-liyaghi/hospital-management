@@ -26,6 +26,8 @@
       <td><a href="{%url 'base:profile' users.applier.pk users.applier.email %}"> <input type="submit" value="Profile" class="btn-green"></a> </td>
     </tr>
   </tbody>
+    {% empty %}
+      <h3>There is no admin request</h3>
     {%endfor%}
 </table>
 
