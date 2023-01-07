@@ -3,7 +3,7 @@
 <p>
   This project lets doctors  share patients information with other doctors in order to save their time.
 </p>
-<p> 
+<p>
   There are 4 types of users:
   <li> Super user</li>
   <li> Admin user</li>
@@ -19,7 +19,7 @@
 
 ### Step 1:
 ```
-$ git clone https://github.com/Ml06py/hospital-management.git
+$ git clone https://github.com/mohamad-liyaghi/hospital-management.git
 ```
 
 ### Step 2:
